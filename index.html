@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscription Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      form {
+        display: grid;
+        gap: 10px;
+      }
+      label {
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      fieldset {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Subscription Form</h1>
+    <form id="subscriptionForm">
+      <label for="subscriberId">Subscriber ID:</label>
+      <input type="text" id="subscriberId" name="subscriberId" />
+
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" name="amount" />
+
+      <label for="enquiryType">Enquiry Type:</label>
+      <input type="text" id="enquiryType" name="enquiryType" />
+
+      <label for="accountType">Account Type:</label>
+      <input type="text" id="accountType" name="accountType" />
+
+      <label for="creditObligation">Credit Obligation:</label>
+      <input type="text" id="creditObligation" name="creditObligation" />
+
+      <fieldset>
+        <legend>Personal Information</legend>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" />
+
+        <label for="otherName">Other Name:</label>
+        <input type="text" id="otherName" name="otherName" />
+
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" />
+
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" />
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+          <option value="">Select gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+          <option value="U">Unknown</option>
+        </select>
+
+        <label for="driversLicenceNumber">Driver's Licence Number:</label>
+        <input
+          type="text"
+          id="driversLicenceNumber"
+          name="driversLicenceNumber"
+        />
+
+        <fieldset>
+          <legend>Address</legend>
+
+          <label for="unitNumber">Unit Number:</label>
+          <input type="text" id="unitNumber" name="unitNumber" />
+
+          <label for="streetNumber">Street Number:</label>
+          <input type="text" id="streetNumber" name="streetNumber" />
+
+          <label for="streetName">Street Name:</label>
+          <input type="text" id="streetName" name="streetName" />
+
+          <label for="streetType">Street Type:</label>
+          <input type="text" id="streetType" name="streetType" />
+
+          <label for="suburbTown">Suburb/Town:</label>
+          <input type="text" id="suburbTown" name="suburbTown" />
+
+          <label for="state">State:</label>
+          <input type="text" id="state" name="state" />
+
+          <label for="postcode">Postcode:</label>
+          <input type="text" id="postcode" name="postcode" />
+        </fieldset>
+      </fieldset>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("subscriptionForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          try {
+            const url =
+              "https://hook.eu2.make.com/24tcxwwwia5aflabtbpu0rs16bgaz9af";
+            const formData = new FormData(this);
+            const jsonData = Object.fromEntries(formData.entries());
+
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(jsonData),
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Form submitted successfully:", data);
+            alert("Form submitted successfully!");
+          } catch (error) {
+            console.error(
+              "There was a problem with the form submission:",
+              error
+            );
+            alert("There was an error submitting the form. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>
